@@ -21,19 +21,17 @@ namespace RSAEncrypt
             _publicKey = csp.ExportParameters(false);
         }
 
-        public string PublicKeyString()
-        {
-            var sw = new StringWriter();
-            var xs = new XmlSerializer(typeof(RSAParameters));
-            xs.Serialize(sw, _publicKey);
-            return sw.ToString();
-        }
+       // public string PublicKeyString()
+       // {
+       //     var sw = new StringWriter();
+       //     var xs = new XmlSerializer(typeof(RSAParameters));
+       //     xs.Serialize(sw, _publicKey);
+       //     return sw.ToString();
+       // }
 
         public string Encrypt (string text)
         {
-            csp = new RSACryptoServiceProvider();
             csp.ImportParameters(_publicKey);
-
             var data = Encoding.Unicode.GetBytes(text);
             var cypher = csp.Encrypt(data, true);
 
