@@ -13,9 +13,9 @@ namespace RSAEncrypt
         {
             
             Console.WriteLine($"Text zum Verschlüsseln:");
-            string nachricht = Console.ReadLine();
+            string message = Console.ReadLine();
             var rsa = new RSAEnc();
-            var cypher = rsa.Encrypt(nachricht);
+            var cypher = rsa.Encrypt(message);
 
             Console.WriteLine($"Crypted: \n{cypher}\n");            
             Console.WriteLine($"Decrypted:\n" +rsa.Decrypt(cypher));

@@ -11,28 +11,19 @@ namespace RSAEncrypt
 {
     class RSAEnc
     {
-        private static RSACryptoServiceProvider csp = new RSACryptoServiceProvider(2048);
-        private RSAParameters _privateKey;
-        private RSAParameters _publicKey;
-
         public RSAEnc()
         {
             _privateKey = csp.ExportParameters(true);
             _publicKey = csp.ExportParameters(false);
         }
 
-       // public string PublicKeyString()
-       // {
-       //     var sw = new StringWriter();
-       //     var xs = new XmlSerializer(typeof(RSAParameters));
-       //     xs.Serialize(sw, _publicKey);
-       //     return sw.ToString();
-       // }
+        private static RSACryptoServiceProvider csp = new RSACryptoServiceProvider(2048);
+        private RSAParameters _privateKey;
+        private RSAParameters _publicKey;
 
         public string Encrypt (string text)
         {
-            csp.ImportParameters(_publicKey);
-            var data = Encoding.Unicode.GetBytes(text);
+            var data = Encoding.UTF8.GetBytes(text);
             var cypher = csp.Encrypt(data, true);
 
             return Convert.ToBase64String(cypher);
@@ -41,11 +32,16 @@ namespace RSAEncrypt
         public string Decrypt (string cypherText)
         {
             var dataBytes = Convert.FromBase64String(cypherText);
-            csp.ImportParameters(_privateKey);
             var plainText = csp.Decrypt(dataBytes, true);
-            return Encoding.Unicode.GetString(plainText);
+            return Encoding.UTF8.GetString(plainText);
         }
-
-
+        
+        // public string PublicKeyString()
+        // {
+        //     var sw = new StringWriter();
+        //     var xs = new XmlSerializer(typeof(RSAParameters));
+        //     xs.Serialize(sw, _publicKey);
+        //     return sw.ToString();
+        // }
     }
 }
